@@ -3,106 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modo Juego Texto</title>
+<title>Registro Free Fire PRO</title>
 
 <style>
-body{
-  margin:0;
-  background:black;
-  color:white;
-  font-family:Arial;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #0a0a0a, #000);
+    color: white;
 }
 
 /* CONTENEDOR */
-.contenido{
-  width:90%;
-  max-width:700px;
-  padding:20px;
-  background:#111;
-  border-radius:15px;
-  text-align:left;
-  line-height:1.6;
-  overflow-y:auto;
-  max-height:90vh;
+.container {
+    width: 100%;
+    min-height: 100vh;
 }
 
-/* TÍTULOS */
-h2{
-  text-align:center;
-  margin-bottom:15px;
+/* IMAGEN */
+.banner {
+    width: 100%;
+    border-bottom: 2px solid purple;
 }
 
-/* ESPACIOS ENTRE PÁRRAFOS */
-p{
-  margin-bottom:15px;
+/* SECCIÓN */
+.section {
+    padding: 20px;
+}
+
+/* TITULOS */
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: orange;
+}
+
+/* LISTA */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* BENEFICIOS */
+.beneficios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.card {
+    border: 1px solid purple;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    background: #111;
+    transition: 0.3s;
+}
+
+.card:hover {
+    border-color: orange;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px purple;
+}
+
+.card:active {
+    transform: scale(0.95);
+}
+
+/* TEXTO */
+.destacado {
+    text-align: center;
+    color: orange;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* FORM */
+form {
+    padding: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #111;
+    color: white;
+}
+
+/* BOTON */
+button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(45deg, orange, red, purple);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 0 15px orange;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* MENSAJE */
+#msg {
+    text-align: center;
+    margin-top: 10px;
+    display: none;
+    font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="contenido">
+<div class="container">
 
-<h2>🔥 Consejos de Saxtra</h2>
+<img src="https://i.imgur.com/prAsg5u.png" class="banner">
 
-<p><b>¡¡Qué grande, crack!!</b></p>
+<div class="section">
 
-<p>Analiza qué fue lo que le gustó a tu comunidad. ¿El tema? ¿La edición? ¿El humor? Aprende de eso y repite lo que te funcionó.</p>
+<h2>REQUISITOS PARA ENTRAR</h2>
 
-<p><b>Consejo:</b><br>
-Comenta en tu propio video con preguntas tipo “¿Te pasó algo parecido?”, “¿Qué otra arma quieren ver?”</p>
+<ul>
+<li>✔ Seguirme en TikTok</li>
+<li>✔ No necesitas mucho apoyo, lo importante es tu actitud 💪</li>
+<li>✔ No importa el nivel</li>
+<li>✔ Ser creador de contenido 🎥</li>
+<li>✔ Tener ganas reales de crecer 🚀</li>
+<li>✔ Mentalidad positiva y disciplina 🔥</li>
+<li>✔ Aquí no gana el mejor… gana el que nunca se rinde 💯</li>
+</ul>
 
-<p>Si usaste una canción, efecto o estilo que te funcionó, úsalos en tu próximo video para aprovechar el impulso.</p>
+<h2>BENEFICIOS</h2>
 
-<p><b>No estoy llegando a mucha gente :(</b></p>
+<div class="beneficios">
 
-<p>¡Tranquilo, bro! Nos pasa a todos.<br>
-A veces un video no despega, pero el siguiente sí.</p>
+<a href="LINK_AQUI_1" target="_blank" class="card">
+🏆 Entrar al equipo
+</a>
 
-<p>No te frustres, cambia de estilo, prueba con otro tipo de contenido o sube en otro horario.</p>
+<a href="LINK_AQUI_2" target="_blank" class="card">
+📈 Crecer en TikTok
+</a>
 
-<p><b>TIP:</b> Inspírate en otros creadores, pero no los copies.</p>
+<a href="LINK_AQUI_3" target="_blank" class="card">
+🎁 Eventos exclusivos
+</a>
 
-<p>Tu toque personal es lo que te hará diferente.</p>
+<a href="LINK_AQUI_4" target="_blank" class="card">
+⭐ Oportunidad de destacar
+</a>
 
-<p>Y recuerda, todos los cracks empezaron igual, con pocos likes pero muchas ganas.</p>
+</div>
 
-<p>¡No olvides revisar el tiempo de visualización! Si la gente se va rápido, cambia el inicio del video a uno más atractivo.</p>
+<p class="destacado">⚡ CUPOS LIMITADOS ⚡</p>
+<p style="text-align:center;">🔥 REGISTRATE ABAJO YAAA 🔥</p>
 
-<h2>💡 Consejos de Creador a Creador</h2>
+</div>
 
-<p>✔ Sé constante.<br>
-✔ Un mal video no define tu talento.<br>
-✔ Siempre se puede aprender.</p>
+<form id="formulario" action="https://formspree.io/f/mnjwanaj" method="POST">
 
-<p>✔ Cuida la calidad del audio y la imagen.<br>
-✔ Comparte tus videos con amigos.<br>
-✔ Apóyense entre ustedes.</p>
+<input type="text" name="nombre" placeholder="Nombre completo" required>
+<input type="url" name="tiktok" placeholder="https://tiktok.com/@usuario" required>
+<input type="number" name="telefono" placeholder="Teléfono" required>
+<input type="text" name="id" placeholder="ID Free Fire" required>
 
-<p>✔ Diviértete. Si tú disfrutas, los demás lo sienten.</p>
+<input type="text" name="extra" style="display:none">
 
-<p>✔ Colabora con otros creadores (dúos o reacciones).</p>
+<button type="submit">🚀 ENVIAR REGISTRO</button>
 
-<p>✔ No esperes a tener todo perfecto para empezar.</p>
+</form>
 
-<p>Graba, edita, sube y aprende en el camino.</p>
-
-<p><b>🔥 Cada video te hace mejor. El próximo viral puede ser el tuyo.</b></p>
-
-<p>Nadie nace sabiendo. Empieza, equivócate y mejora.</p>
-
-<p><b>¡Aquí estamos para apoyarte!</b></p>
+<div id="msg"></div>
 
 </div>
 
 <script>
-// 🔥 FORZAR MODO HORIZONTAL
-screen.orientation.lock("landscape").catch(()=>{});
+const form = document.getElementById("formulario");
+const msg = document.getElementById("msg");
+
+// BLOQUEO 24 HORAS
+const tiempo = localStorage.getItem("registroTiempo");
+
+if(tiempo){
+    const ahora = new Date().getTime();
+    const diferencia = ahora - tiempo;
+
+    if(diferencia < 86400000){ // 24 horas
+        form.style.display = "none";
+        msg.style.display = "block";
+        msg.innerHTML = "⚠️ Ya enviaste una solicitud. Intenta en 24 horas.";
+    }
+}
+
+form.addEventListener("submit", function(e){
+
+    const link = form.tiktok.value.trim();
+    const bot = form.extra.value;
+
+    if(bot !== ""){
+        e.preventDefault();
+        return;
+    }
+
+    if(!link.includes("tiktok.com")){
+        e.preventDefault();
+        alert("⚠️ Link de TikTok inválido");
+        return;
+    }
+
+    localStorage.setItem("registroTiempo", new Date().getTime());
+
+    msg.style.display = "block";
+    msg.innerHTML = "🚀 Enviando solicitud...";
+    
+    form.style.opacity = "0.5";
+    form.style.pointerEvents = "none";
+});
 </script>
 
 </body>
