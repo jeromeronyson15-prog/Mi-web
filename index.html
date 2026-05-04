@@ -3,241 +3,524 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registro Free Fire PRO</title>
+<title>SOY SAXTRA CREADOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#000;
+    color:#fff;
+}
+
+/* HEADER */
+.header{
+    text-align:center;
+    padding:30px 20px;
+    background:linear-gradient(180deg,#000,#111);
+}
+
+.header img{
+    width:120px;
+    border-radius:50%;
+    border:3px solid #00ff99;
+}
+
+h1{
+    margin:10px 0;
+}
+
+.tag{
+    color:#00ff99;
+}
+
+/* SECCIONES */
+.section{
+    padding:20px;
+    border-bottom:1px solid #111;
+}
+
+/* CARDS */
+.card{
+    background:#111;
+    padding:15px;
+    border-radius:12px;
+    margin:10px 0;
+    box-shadow:0 0 10px #000;
+}
+
+/* BOTONES */
+.btn{
+    display:block;
+    text-align:center;
+    margin:10px 0;
+    padding:15px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+/* colores */
+.tiktok{ background:#111; border:1px solid #ff0050; color:#ff0050; }
+.instagram{ background:#111; border:1px solid #ff9900; color:#ff9900; }
+.youtube{ background:#111; border:1px solid red; color:#ff0050; }
+.discord{ background:#111; border:1px solid #5865F2; color:#5865F2; }
+
+.btn:hover{
+    transform:scale(1.05);
+    background:#00ff99;
+    color:#000;
+}
+
+/* CONFIG */
+.config{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.config div{
+    background:#111;
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    padding:20px;
+    color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <img src="https://i.imgur.com/cQeT1mh.png">
+    <h1>SOY SAXTRA</h1>
+    <p class="tag">Jugador Profesional 🔥</p>
+</div>
+
+
+<!-- INFO DEL JUEGO -->
+<div class="section">
+    <h2>🎮 Información</h2>
+
+    <div class="card">ID: 8278065600</div>
+    <div class="card">Nivel: 59</div>
+<div class="card" onclick="abrirClan()" style="cursor:pointer;">
+Clan: KZR┋NESSSㅤ楤
+</div>
+    <div class="card">Región: Latinoamérica</div>
+</div>
+
+
+<!-- CONFIGURACIÓN -->
+<div class="section">
+    <h2>⚙️ Configuración</h2>
+
+    <div class="config">
+        <div>Sensibilidad General: 185</div>
+        <div>Punto Rojo: 60</div>
+        <div>Mira 2x: 115</div>
+        <div>Mira 4x: 100</div>
+        <div>AWM: 80</div>
+<div onclick="mostrarHUD()" style="cursor:pointer;">
+HUD: Personalizado
+</div>
+    </div>
+</div>
+<script>
+function mostrarHUD(){
+    alert("#FFHUDT6O3j8EE0J9Po7eN");
+}
+</script>
+
+<!-- REDES -->
+<div class="section">
+    <h2>🌐 Mis Redes</h2>
+
+    <a href="https://www.tiktok.com/@soy_saxtra?_r=1&_t=ZS-964TCDZTRUz" target="_blank" class="btn tiktok">TikTok</a>
+    <a href="https://www.instagram.com/soy_saxtra?igsh=anhxcHY0cXZhNGxy" target="_blank" class="btn instagram">Instagram</a>
+    <a href="https://youtube.com/@soy_saxtra?si=ClLDXBtpREnHM2jW" target="_blank" class="btn youtube">YouTube</a>
+    <a href="https://kick.com/soysaxtra" target="_blank" class="btn discord">Kick</a>
+</div>
+
+<!-- EXTRA -->
+<div class="section">
+    <h2>🔥 Sobre mí</h2>
+
+    <div class="card">
+      UN CREADOR DE CONTENIDO QUE SUEÑA CON FORMAR UNA LINDA COMUNIDAR EN TIK TOK AUNQUE NO ES TAN RECONOSIDO NI APOLLADO PERO AUN ASI NO SE RINDE PORQUE TIENE FE QUE ALGUN DIA LO PUEDE LOGRAR. Y RECUERDA QUE LA MEJOR MANERA DE AYUDAR A ESTE CREADOR ES SEGUIRLO YA QUI QUIERE YEGAR A LOS 50 MIL SEGUIDORES.🔥
+    </div>
+</div>
+<div style="text-align:center; padding:20px;">
+    <img src="https://i.imgur.com/TlXiBXr.png" style="width:90%; max-width:400px; border-radius:15px;">
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2026 RONY FF - Todos los derechos reservados
+</div>
+
+</body>
+</html>
+
+<div class="registro">
+
+<h2>🔥 ÚNETE A SAXTRA</h2>
+<p id="estadoTexto">Completa todo para enviar tu solicitud</p>
+
+<form id="formulario" action="https://formspree.io/f/mnjwanaj" method="POST">
+
+<input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+
+<input type="email" id="email" name="email" placeholder="Correo" required>
+
+<input type="text" id="id" name="id" placeholder="ID de Free Fire" required>
+
+<input type="tel" id="telefono" name="telefono" placeholder="Número de teléfono" inputmode="numeric" pattern="[0-9]+" required>
+
+<input type="url" id="creador" name="creador" placeholder="Link de tu perfil" required>
+
+<input type="url" id="foto" name="foto" placeholder="Link de tu foto (Drive o Imgur)">
+
+<button type="submit">🚀 Enviar solicitud</button>
+
+</form>
+
+</div>
+<style>
+.registro{
+    width:90%;
+    max-width:400px;
+    background:#111;
+    padding:25px;
+    margin:40px auto;
+    border-radius:15px;
+    text-align:center;
+    position:relative;
+}
+
+.registro::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:18px;
+    background:linear-gradient(90deg,
+    red,orange,yellow,lime,cyan,blue,violet,red);
+    background-size:300%;
+    animation:rgb 6s linear infinite;
+    z-index:-1;
+}
+
+.registro input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    background:#222;
+    color:white;
+}
+
+.registro button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(45deg, cyan, magenta);
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#estadoTexto{
+    margin-bottom:10px;
+    font-size:14px;
+    color:#aaa;
+}
+
+@keyframes rgb{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+</style>
+
+
+<script>
+const form = document.getElementById("formulario");
+const estadoTexto = document.getElementById("estadoTexto");
+
+const KEY = "registro_saxtra";
+
+// 🔒 BLOQUEO SI YA ENVIÓ
+if(localStorage.getItem(KEY)){
+    form.style.display = "none";
+    estadoTexto.innerHTML = "🟡 Tu solicitud fue emviada grasias por partisipar";
+    estadoTexto.style.color = "yellow";
+}
+
+// VALIDACIÓN + ENVÍO
+form.addEventListener("submit", function(e){
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const id = document.getElementById("id").value.trim();
+    const telefono = document.getElementById("telefono").value.trim();
+    const creador = document.getElementById("creador").value.trim();
+
+    // VALIDAR LINK
+    if(!creador.startsWith("http")){
+        e.preventDefault();
+        estadoTexto.innerHTML = "❌ El link debe ser válido (https://...)";
+        estadoTexto.style.color = "red";
+        return;
+    }
+
+    // VALIDAR TELÉFONO SOLO NÚMEROS
+    if(!/^[0-9]+$/.test(telefono)){
+        e.preventDefault();
+        estadoTexto.innerHTML = "❌ El número debe ser solo números";
+        estadoTexto.style.color = "red";
+        return;
+    }
+
+    // TODO CORRECTO
+    localStorage.setItem(KEY, "enviado");
+
+    estadoTexto.innerHTML = "🟡 Enviando... tu solicitud quedará en revisión";
+    estadoTexto.style.color = "cyan";
+});
+</script>
+
+<div class="top-container">
+
+<h2>🏆 TOP De mejores jugadores</h2>
+
+<div class="top-item top1">🥇 <span contenteditable="true"> Top 1 :Nombre</span></div>
+<div class="top-item top2">🥈 <span contenteditable="true"> Top 2 :Nombre</span></div>
+<div class="top-item top3">🥉 <span contenteditable="true"> Top 3 :Nombre</span></div>
+<div class="top-item">4️⃣ <span contenteditable="true"> Top 4 :Nombre</span></div>
+<div class="top-item">5️⃣ <span contenteditable="true"> Top 5 :Nombre</span></div>
+
+</div>
+<style>
+.top-container{
+    width:90%;
+    max-width:400px;
+    margin:40px auto;
+    padding:20px;
+    background:#111;
+    border-radius:15px;
+    text-align:center;
+    position:relative;
+}
+
+/* BORDE RGB */
+.top-container::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:18px;
+    background:linear-gradient(90deg,
+    red,orange,yellow,lime,cyan,blue,violet,red);
+    background-size:300%;
+    animation:rgb 6s linear infinite;
+    z-index:-1;
+}
+
+.top-container h2{
+    margin-bottom:15px;
+}
+
+/* ITEMS */
+.top-item{
+    background:#222;
+    padding:14px;
+    margin:10px 0;
+    border-radius:10px;
+    font-weight:bold;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    transition:0.3s;
+}
+
+/* EFECTO HOVER */
+.top-item:hover{
+    transform:scale(1.05);
+}
+
+/* COLORES ESPECIALES */
+.top1{
+    background:linear-gradient(45deg, gold, orange);
+    color:black;
+}
+
+.top2{
+    background:linear-gradient(45deg, silver, gray);
+    color:black;
+}
+
+.top3{
+    background:linear-gradient(45deg, #cd7f32, brown);
+    color:white;
+}
+
+/* EDITABLE */
+.top-item span{
+    outline:none;
+}
+
+@keyframes rgb{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+</style>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Votación PRO SAXTRA</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at top, #0a0a0a, #000);
+    background: #0a0a0a;
     color: white;
-}
-
-/* CONTENEDOR */
-.container {
-    width: 100%;
-    min-height: 100vh;
-}
-
-/* IMAGEN */
-.banner {
-    width: 100%;
-    border-bottom: 2px solid purple;
-}
-
-/* SECCIÓN */
-.section {
-    padding: 20px;
-}
-
-/* TITULOS */
-h2 {
+    font-family: Arial;
     text-align: center;
-    margin-bottom: 10px;
-    color: orange;
 }
 
-/* LISTA */
-ul {
-    list-style: none;
-    padding: 0;
+h1 {
+    margin-top: 20px;
 }
 
-ul li {
-    margin: 10px 0;
-    font-size: 14px;
-}
-
-/* BENEFICIOS */
-.beneficios {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.card {
-    border: 1px solid purple;
-    border-radius: 12px;
-    padding: 12px;
-    text-align: center;
-    font-size: 13px;
-    display: block;
-    text-decoration: none;
-    color: white;
+/* TARJETAS */
+.jugador {
     background: #111;
-    transition: 0.3s;
-}
-
-.card:hover {
-    border-color: orange;
-    transform: scale(1.05);
-    box-shadow: 0 0 10px purple;
-}
-
-.card:active {
-    transform: scale(0.95);
-}
-
-/* TEXTO */
-.destacado {
-    text-align: center;
-    color: orange;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-/* FORM */
-form {
-    padding: 20px;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 10px;
-    border: 1px solid #333;
-    background: #111;
-    color: white;
-}
-
-/* BOTON */
-button {
-    width: 100%;
+    margin: 15px auto;
     padding: 15px;
-    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    position: relative;
+}
+
+/* BOTÓN */
+button {
+    padding: 10px;
     border: none;
-    background: linear-gradient(45deg, orange, red, purple);
-    color: white;
-    font-size: 16px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, cyan, magenta);
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-button:hover {
-    box-shadow: 0 0 15px orange;
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-/* MENSAJE */
-#msg {
-    text-align: center;
-    margin-top: 10px;
-    display: none;
-    font-weight: bold;
+/* RESULTADOS */
+#ranking {
+    margin-top: 30px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<h1>🔥 VOTA TU JUGADOR 🔥</h1>
 
-<img src="https://i.imgur.com/prAsg5u.png" class="banner">
-
-<div class="section">
-
-<h2>REQUISITOS PARA ENTRAR</h2>
-
-<ul>
-<li>✔ Seguirme en TikTok</li>
-<li>✔ No necesitas mucho apoyo, lo importante es tu actitud 💪</li>
-<li>✔ No importa el nivel</li>
-<li>✔ Ser creador de contenido 🎥</li>
-<li>✔ Tener ganas reales de crecer 🚀</li>
-<li>✔ Mentalidad positiva y disciplina 🔥</li>
-<li>✔ Aquí no gana el mejor… gana el que nunca se rinde 💯</li>
-</ul>
-
-<h2>BENEFICIOS</h2>
-
-<a href="https://www.tiktok.com/@soy_saxtra?_r=1&_t=ZS-961K2eKmy3g" target="_blank" class="card">
-❤️‍🩹 Creador de la web❤️‍🔥🌐
-</a>
-
-    
-<a href="LINK_AQUI_2" target="_blank" class="card">
-📈 Crecer en TikTok
-</a>
-
-<a href="https://flourishing-gingersnap-3f9830.netlify.app" target="_blank" class="card">
-🎁 Eventos exclusivos
-</a>
-
-<a href="https://cozy-rabanadas-cff010.netlify.app/" target="_blank" class="card">
-⭐ Consejos de creser
-</a>
-
+<div class="jugador">
+    <h2>Donato</h2>
+    <button onclick="votar('Jugador 1')">Votar</button>
 </div>
 
-<p class="destacado">⚡ CUPOS LIMITADOS ⚡</p>
-<p style="text-align:center;">🔥 REGISTRATE ABAJO YAAA 🔥</p>
-
+<div class="jugador">
+    <h2>manolo</h2>
+    <button onclick="votar('Jugador 2')">Votar</button>
 </div>
 
-<form id="formulario" action="https://formspree.io/f/mnjwanaj" method="POST">
-
-<input type="text" name="nombre" placeholder="Nombre completo" required>
-<input type="url" name="tiktok" placeholder="https://tiktok.com/@usuario" required>
-<input type="number" name="telefono" placeholder="Teléfono" required>
-<input type="text" name="id" placeholder="ID Free Fire" required>
-
-<input type="text" name="extra" style="display:none">
-
-<button type="submit">🚀 ENVIAR REGISTRO</button>
-
-</form>
-
-<div id="msg"></div>
-
+<div class="jugador">
+    <h2>suco</h2>
+    <button onclick="votar('Jugador 3')">Votar</button>
 </div>
 
-<script>
-const form = document.getElementById("formulario");
-const msg = document.getElementById("msg");
+<div id="ranking">
+    <h2>🏆 RESULTADOS EN VIVO</h2>
+    <div id="resultados"></div>
+</div>
 
-// BLOQUEO 24 HORAS
-const tiempo = localStorage.getItem("registroTiempo");
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-if(tiempo){
-    const ahora = new Date().getTime();
-    const diferencia = ahora - tiempo;
+const firebaseConfig = {
+  apiKey: "AIzaSyDpDyApl5EHdHs8_y_gmxQDKk8Ou5dCNKU",
+  authDomain: "exprem-r.firebaseapp.com",
+  databaseURL: "https://exprem-r-default-rtdb.firebaseio.com",
+  projectId: "exprem-r",
+  storageBucket: "exprem-r.firebasestorage.app",
+  messagingSenderId: "147766976898",
+  appId: "1:147766976898:web:545185bd2a1018efddaf9b"
+};
 
-    if(diferencia < 86400000){ // 24 horas
-        form.style.display = "none";
-        msg.style.display = "block";
-        msg.innerHTML = "⚠️ Ya enviaste una solicitud. Intenta en 24 horas.";
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// 🚫 SOLO 1 VOTO
+window.votar = function(nombre) {
+
+    if(localStorage.getItem("yaVoto")){
+        alert("⛔ Ya votaste");
+        return;
     }
+
+    const votoRef = ref(db, "votos/" + nombre);
+
+    runTransaction(votoRef, (actual) => {
+        return (actual || 0) + 1;
+    });
+
+    localStorage.setItem("yaVoto", "si");
+
+    alert("✅ Gracias por votar");
 }
 
-form.addEventListener("submit", function(e){
+// 🔥 RESULTADOS EN TIEMPO REAL
+const votosRef = ref(db, "votos");
 
-    const link = form.tiktok.value.trim();
-    const bot = form.extra.value;
+onValue(votosRef, (snapshot) => {
+    const data = snapshot.val();
 
-    if(bot !== ""){
-        e.preventDefault();
-        return;
-    }
+    if(!data) return;
 
-    if(!link.includes("tiktok.com")){
-        e.preventDefault();
-        alert("⚠️ Link de TikTok inválido");
-        return;
-    }
+    let lista = Object.entries(data);
 
-    localStorage.setItem("registroTiempo", new Date().getTime());
+    // ORDENAR POR MÁS VOTOS
+    lista.sort((a, b) => b[1] - a[1]);
 
-    msg.style.display = "block";
-    msg.innerHTML = "🚀 Enviando solicitud...";
-    
-    form.style.opacity = "0.5";
-    form.style.pointerEvents = "none";
+    let html = "";
+
+    lista.forEach((jugador, index) => {
+
+        let medalla = "";
+
+        if(index == 0) medalla = "🥇";
+        else if(index == 1) medalla = "🥈";
+        else if(index == 2) medalla = "🥉";
+
+        html += `<p>${medalla} ${jugador[0]}: ${jugador[1]} votos</p>`;
+    });
+
+    document.getElementById("resultados").innerHTML = html;
 });
 </script>
 
