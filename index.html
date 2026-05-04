@@ -301,92 +301,6 @@ form.addEventListener("submit", function(e){
 });
 </script>
 
-<div class="top-container">
-
-<h2>🏆 TOP De mejores jugadores</h2>
-
-<div class="top-item top1">🥇 <span contenteditable="true"> Top 1 :Nombre</span></div>
-<div class="top-item top2">🥈 <span contenteditable="true"> Top 2 :Nombre</span></div>
-<div class="top-item top3">🥉 <span contenteditable="true"> Top 3 :Nombre</span></div>
-<div class="top-item">4️⃣ <span contenteditable="true"> Top 4 :Nombre</span></div>
-<div class="top-item">5️⃣ <span contenteditable="true"> Top 5 :Nombre</span></div>
-
-</div>
-<style>
-.top-container{
-    width:90%;
-    max-width:400px;
-    margin:40px auto;
-    padding:20px;
-    background:#111;
-    border-radius:15px;
-    text-align:center;
-    position:relative;
-}
-
-/* BORDE RGB */
-.top-container::before{
-    content:"";
-    position:absolute;
-    inset:-2px;
-    border-radius:18px;
-    background:linear-gradient(90deg,
-    red,orange,yellow,lime,cyan,blue,violet,red);
-    background-size:300%;
-    animation:rgb 6s linear infinite;
-    z-index:-1;
-}
-
-.top-container h2{
-    margin-bottom:15px;
-}
-
-/* ITEMS */
-.top-item{
-    background:#222;
-    padding:14px;
-    margin:10px 0;
-    border-radius:10px;
-    font-weight:bold;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    transition:0.3s;
-}
-
-/* EFECTO HOVER */
-.top-item:hover{
-    transform:scale(1.05);
-}
-
-/* COLORES ESPECIALES */
-.top1{
-    background:linear-gradient(45deg, gold, orange);
-    color:black;
-}
-
-.top2{
-    background:linear-gradient(45deg, silver, gray);
-    color:black;
-}
-
-.top3{
-    background:linear-gradient(45deg, #cd7f32, brown);
-    color:white;
-}
-
-/* EDITABLE */
-.top-item span{
-    outline:none;
-}
-
-@keyframes rgb{
-    0%{background-position:0%}
-    100%{background-position:300%}
-}
-</style>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -395,133 +309,183 @@ form.addEventListener("submit", function(e){
 <title>Votación PRO SAXTRA</title>
 
 <style>
-body {
-    background: #0a0a0a;
-    color: white;
-    font-family: Arial;
-    text-align: center;
-}
-
-h1 {
-    margin-top: 20px;
+body{
+    background:#0a0a0a;
+    font-family:Arial;
+    color:white;
+    text-align:center;
 }
 
 /* TARJETAS */
-.jugador {
-    background: #111;
-    margin: 15px auto;
-    padding: 15px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 15px;
-    position: relative;
+.card{
+    background:#111;
+    margin:10px;
+    padding:15px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
 }
 
-/* BOTÓN */
-button {
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(45deg, cyan, magenta);
-    font-weight: bold;
-    cursor: pointer;
+/* NOMBRE */
+.name{
+    font-weight:bold;
+    font-size:16px;
 }
 
-/* RESULTADOS */
-#ranking {
-    margin-top: 30px;
+/* VOTOS */
+.votos{
+    color:lime;
+    font-size:18px;
+}
+
+/* TOP */
+.top{
+    margin-top:30px;
+    background:#111;
+    padding:15px;
+    border-radius:15px;
+}
+
+.top-item{
+    display:flex;
+    justify-content:space-between;
+    padding:6px;
+}
+
+/* BOTÓN OCULTO */
+#resetBtn{
+    opacity:0;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🔥 VOTA TU JUGADOR 🔥</h1>
+<h2>🔥 VOTA POR EL MEJOR 🔥</h2>
 
-<div class="jugador">
-    <h2>Donato</h2>
-    <button onclick="votar('Jugador 1')">Votar</button>
+<div id="players"></div>
+
+<p id="gracias" style="display:none;">✅ Gracias por votar</p>
+
+<div class="top">
+<h3>🏆 TOP GLOBAL</h3>
+<div id="ranking"></div>
 </div>
 
-<div class="jugador">
-    <h2>manolo</h2>
-    <button onclick="votar('Jugador 2')">Votar</button>
-</div>
+<button id="resetBtn">reset</button>
 
-<div class="jugador">
-    <h2>suco</h2>
-    <button onclick="votar('Jugador 3')">Votar</button>
-</div>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-<div id="ranking">
-    <h2>🏆 RESULTADOS EN VIVO</h2>
-    <div id="resultados"></div>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, runTransaction, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyDpDyApl5EHdHs8_y_gmxQDKk8Ou5dCNKU",
   authDomain: "exprem-r.firebaseapp.com",
   databaseURL: "https://exprem-r-default-rtdb.firebaseio.com",
   projectId: "exprem-r",
-  storageBucket: "exprem-r.firebasestorage.app",
-  messagingSenderId: "147766976898",
-  appId: "1:147766976898:web:545185bd2a1018efddaf9b"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-// 🚫 SOLO 1 VOTO
-window.votar = function(nombre) {
+// 🔥 10 JUGADORES
+const lista = [
+{id:"p1", nombre:"Tinka"},
+{id:"p2", nombre:"L-Gang"},
+{id:"p3", nombre:"Domidios"},
+{id:"p4", nombre:"Donato"},
+{id:"p5", nombre:"Santana"},
+{id:"p6", nombre:"Dejabu"},
+{id:"p7", nombre:"Marichal"},
+{id:"p8", nombre:"Mocho 666"},
+{id:"p9", nombre:"boykaffx"},
+{id:"p10", nombre:"505 Alak"}
+];
 
-    if(localStorage.getItem("yaVoto")){
+const container = document.getElementById("players");
+
+// CREAR JUGADORES
+lista.forEach(j=>{
+    const div = document.createElement("div");
+    div.className="card";
+
+    div.innerHTML = `
+    <div class="name">${j.nombre}</div>
+    <div class="votos" id="${j.id}">0</div>
+    `;
+
+    div.onclick=()=>votar(j.id);
+    container.appendChild(div);
+
+    db.ref("votos/"+j.id).on("value", snap=>{
+        document.getElementById(j.id).innerText = snap.val() || 0;
+    });
+});
+
+// VOTAR
+function votar(id){
+    if(localStorage.getItem("votado")){
         alert("⛔ Ya votaste");
         return;
     }
 
-    const votoRef = ref(db, "votos/" + nombre);
+    db.ref("votos/"+id).transaction(v=> (v||0)+1);
 
-    runTransaction(votoRef, (actual) => {
-        return (actual || 0) + 1;
-    });
+    localStorage.setItem("votado","si");
 
-    localStorage.setItem("yaVoto", "si");
-
-    alert("✅ Gracias por votar");
+    document.getElementById("players").style.display="none";
+    document.getElementById("gracias").style.display="block";
 }
 
-// 🔥 RESULTADOS EN TIEMPO REAL
-const votosRef = ref(db, "votos");
+// RANKING
+const rankingDiv = document.getElementById("ranking");
 
-onValue(votosRef, (snapshot) => {
-    const data = snapshot.val();
+db.ref("votos").on("value", snap=>{
+    const data = snap.val() || {};
 
-    if(!data) return;
-
-    let lista = Object.entries(data);
-
-    // ORDENAR POR MÁS VOTOS
-    lista.sort((a, b) => b[1] - a[1]);
-
-    let html = "";
-
-    lista.forEach((jugador, index) => {
-
-        let medalla = "";
-
-        if(index == 0) medalla = "🥇";
-        else if(index == 1) medalla = "🥈";
-        else if(index == 2) medalla = "🥉";
-
-        html += `<p>${medalla} ${jugador[0]}: ${jugador[1]} votos</p>`;
+    let arr = lista.map(j=>{
+        return {nombre:j.nombre, votos:data[j.id]||0};
     });
 
-    document.getElementById("resultados").innerHTML = html;
+    arr.sort((a,b)=>b.votos-a.votos);
+
+    rankingDiv.innerHTML="";
+
+    arr.forEach((p,i)=>{
+        let medal="";
+        if(i==0) medal="🥇";
+        else if(i==1) medal="🥈";
+        else if(i==2) medal="🥉";
+        else medal=(i+1)+".";
+
+        rankingDiv.innerHTML += `
+        <div class="top-item">
+        <span>${medal} ${p.nombre}</span>
+        <span>${p.votos}</span>
+        </div>`;
+    });
 });
+
+// BOTÓN SECRETO
+document.body.addEventListener("dblclick", ()=>{
+    document.getElementById("resetBtn").style.opacity=1;
+});
+
+// RESET
+document.getElementById("resetBtn").onclick=()=>{
+    let pass=prompt("Contraseña:");
+
+    if(pass==="2010"){ // cambia esto
+        db.ref("votos").set({});
+        localStorage.removeItem("votado");
+        alert("🔥 Reiniciado");
+        location.reload();
+    }else{
+        alert("❌ Incorrecto");
+    }
+};
 </script>
 
 </body>
