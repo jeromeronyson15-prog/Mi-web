@@ -577,6 +577,110 @@ header{
 
 <body>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda PRO</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(135deg,#020617,#0f172a);
+  color:white;
+}
+
+/* HEADER */
+header{
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  background:#020617;
+  box-shadow:0 0 10px black;
+}
+
+/* CONTENEDOR EN COLUMNA */
+.container{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  padding:15px;
+}
+
+/* CARD PRO */
+.card{
+  background:#1e293b;
+  border-radius:15px;
+  padding:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 0 15px rgba(0,0,0,0.5);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.02);
+}
+
+/* IMAGEN */
+.card img{
+  width:80px;
+  height:80px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+/* INFO */
+.info{
+  flex:1;
+  text-align:left;
+}
+
+.nombre{
+  font-weight:bold;
+}
+
+.precio{
+  color:#22c55e;
+  margin:5px 0;
+}
+
+/* CONTROLES */
+.controls{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.cantidad{
+  width:60px;
+  padding:5px;
+  border-radius:6px;
+  border:none;
+  text-align:center;
+}
+
+.btn{
+  background:#22c55e;
+  border:none;
+  padding:8px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:#16a34a;
+}
+</style>
+</head>
+
+<body>
+
 <header>🛒 TIENDA PRO</header>
 
 <div class="container" id="productos"></div>
@@ -612,23 +716,30 @@ const numero = "18093711341";
 const contenedor = document.getElementById("productos");
 
 // CREAR PRODUCTOS
-productos.forEach((p,index) => {
+productos.forEach((p,index)=>{
   contenedor.innerHTML += `
     <div class="card">
+      
       <img src="${p.imagen}">
-      <div class="nombre">${p.nombre}</div>
-      <div class="precio">RD$${p.precio}</div>
 
-      <input type="number" min="1" value="1" id="cant${index}" class="cantidad">
+      <div class="info">
+        <div class="nombre">${p.nombre}</div>
+        <div class="precio">RD$${p.precio}</div>
+      </div>
 
-      <button class="btn" onclick="comprar(${index})">
-        Comprar
-      </button>
+      <div class="controls">
+        <input type="number" min="1" value="1" id="cant${index}" class="cantidad">
+
+        <button class="btn" onclick="comprar(${index})">
+          Comprar
+        </button>
+      </div>
+
     </div>
   `;
 });
 
-// FUNCIÓN PRO
+// COMPRAR
 function comprar(index){
   let p = productos[index];
   let cantidad = document.getElementById("cant"+index).value;
