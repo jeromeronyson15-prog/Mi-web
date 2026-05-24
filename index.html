@@ -3,97 +3,278 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOY SAXTRA CREADOR</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<title>SAXTRA GAMER</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
 body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
-    background:#000;
-    color:#fff;
+background:#000;
+overflow-x:hidden;
+padding:30px 20px;
+color:white;
 }
 
-/* HEADER */
-.header{
-    text-align:center;
-    padding:30px 20px;
-    background:linear-gradient(180deg,#000,#111);
+/* FONDO GAMER */
+
+body::before{
+content:'';
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at top,#00ff8840,transparent 40%),
+radial-gradient(circle at bottom,#ff00ff30,transparent 40%),
+#000;
+z-index:-2;
 }
 
-.header img{
-    width:120px;
-    border-radius:50%;
-    border:3px solid #00ff99;
+/* LUCES */
+
+.glow{
+position:fixed;
+width:300px;
+height:300px;
+border-radius:50%;
+filter:blur(140px);
+opacity:0.2;
+z-index:-1;
+animation:moveGlow 8s infinite alternate;
 }
 
-h1{
-    margin:10px 0;
+.glow1{
+background:#00ff88;
+top:-100px;
+left:-100px;
 }
 
-.tag{
-    color:#00ff99;
+.glow2{
+background:#ff00ff;
+bottom:-100px;
+right:-100px;
 }
 
-/* SECCIONES */
-.section{
-    padding:20px;
-    border-bottom:1px solid #111;
+@keyframes moveGlow{
+0%{
+transform:translate(0,0);
+}
+100%{
+transform:translate(50px,50px);
+}
 }
 
-/* CARDS */
-.card{
-    background:#111;
-    padding:15px;
-    border-radius:12px;
-    margin:10px 0;
-    box-shadow:0 0 10px #000;
+/* PERFIL */
+
+.profile{
+text-align:center;
+margin-bottom:35px;
 }
 
-/* BOTONES */
-.btn{
-    display:block;
-    text-align:center;
-    margin:10px 0;
-    padding:15px;
-    border-radius:10px;
-    text-decoration:none;
-    font-weight:bold;
-    transition:0.3s;
+.profile img{
+width:130px;
+height:130px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid transparent;
+background:
+linear-gradient(#000,#000) padding-box,
+linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,purple,red) border-box;
+background-size:400%;
+animation:rgbBorder 5s linear infinite;
+box-shadow:
+0 0 25px rgba(255,255,255,0.3);
 }
 
-/* colores */
-.tiktok{ background:#111; border:1px solid #ff0050; color:#ff0050; }
-.instagram{ background:#111; border:1px solid #ff9900; color:#ff9900; }
-.youtube{ background:#111; border:1px solid red; color:#ff0050; }
-.discord{ background:#111; border:1px solid #5865F2; color:#5865F2; }
-
-.btn:hover{
-    transform:scale(1.05);
-    background:#00ff99;
-    color:#000;
+.profile h1{
+margin-top:20px;
+font-size:42px;
+letter-spacing:5px;
+color:white;
+text-shadow:
+0 0 10px #00ff88,
+0 0 20px #00ff88;
 }
 
-/* CONFIG */
-.config{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+.profile p{
+margin-top:10px;
+font-size:12px;
+color:#aaa;
+letter-spacing:2px;
 }
 
-.config div{
-    background:#111;
-    padding:10px;
-    border-radius:10px;
-    text-align:center;
+/* BOTONES ARRIBA */
+
+.top-buttons{
+display:flex;
+gap:15px;
+margin-bottom:40px;
+}
+
+.top-buttons a{
+flex:1;
+position:relative;
+padding:18px;
+text-decoration:none;
+text-align:center;
+font-size:15px;
+font-weight:bold;
+color:white;
+border-radius:18px;
+overflow:hidden;
+z-index:1;
+transition:0.3s;
+}
+
+/* BORDE RGB */
+
+.top-buttons a::before{
+content:'';
+position:absolute;
+top:-2px;
+left:-2px;
+right:-2px;
+bottom:-2px;
+border-radius:18px;
+background:linear-gradient(
+90deg,
+red,
+orange,
+yellow,
+lime,
+cyan,
+blue,
+purple,
+red
+);
+background-size:400%;
+animation:rgbBorder 5s linear infinite;
+z-index:-2;
+}
+
+/* FONDO INTERNO */
+
+.top-buttons a::after{
+content:'';
+position:absolute;
+top:2px;
+left:2px;
+right:2px;
+bottom:2px;
+border-radius:16px;
+z-index:-1;
+}
+
+.youtube::after{
+background:linear-gradient(90deg,#ff0000,#8b0000);
+}
+
+.whatsapp::after{
+background:linear-gradient(90deg,#00c853,#008f39);
+}
+
+.top-buttons a:hover{
+transform:scale(1.05);
+}
+
+/* BOTONES LARGOS */
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:22px;
+}
+
+.menu a{
+position:relative;
+text-decoration:none;
+color:#00ff88;
+padding:24px;
+font-size:16px;
+letter-spacing:2px;
+border-radius:22px;
+overflow:hidden;
+z-index:1;
+transition:0.3s;
+}
+
+/* BORDE RGB */
+
+.menu a::before{
+content:'';
+position:absolute;
+top:-2px;
+left:-2px;
+right:-2px;
+bottom:-2px;
+border-radius:22px;
+background:linear-gradient(
+90deg,
+red,
+orange,
+yellow,
+lime,
+cyan,
+blue,
+purple,
+red
+);
+background-size:400%;
+animation:rgbBorder 6s linear infinite;
+z-index:-2;
+}
+
+/* FONDO NEGRO */
+
+.menu a::after{
+content:'';
+position:absolute;
+top:2px;
+left:2px;
+right:2px;
+bottom:2px;
+background:#080808;
+border-radius:20px;
+z-index:-1;
+}
+
+.menu a:hover{
+transform:translateY(-5px) scale(1.02);
+box-shadow:0 0 25px rgba(255,255,255,0.2);
+}
+
+/* ANIMACIÓN RGB */
+
+@keyframes rgbBorder{
+
+0%{
+background-position:0%;
+}
+
+100%{
+background-position:400%;
+}
+
 }
 
 /* FOOTER */
+
 .footer{
-    text-align:center;
-    padding:20px;
-    color:#777;
+margin-top:40px;
+text-align:center;
+font-size:12px;
+color:#666;
+letter-spacing:3px;
 }
 
 </style>
@@ -101,54 +282,78 @@ h1{
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <img src="https://i.imgur.com/cQeT1mh.png">
-    <h1>SOY SAXTRA</h1>
-    <p class="tag">Jugador Profesional 🔥</p>
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<!-- PERFIL -->
+
+<div class="profile">
+
+<img src="https://i.imgur.com/2DhmtJ4.jpeg">
+
+<h1>SAXTRA</h1>
+
+<p>GAMER • FREE FIRE • HACKER STYLE</p>
+
 </div>
 
+<!-- BOTONES ARRIBA -->
 
-<!-- INFO DEL JUEGO -->
-<div class="section">
-    <h2>🎮 Información</h2>
+<div class="top-buttons">
 
-    <div class="card">ID: 8278065600</div>
-    <div class="card">Nivel: 59</div>
-<div class="card" onclick="abrirClan()" style="cursor:pointer;">
-Clan: KZR┋NESSSㅤ楤
+<a href="https://youtube.com/@soy_saxtra?si=Zr6VO9R3A1iTucH8"
+class="youtube"
+target="_blank">
+
+▶ YOUTUBE
+
+</a>
+
+<a href="https://wa.me/8093711341"
+class="whatsapp"
+target="_blank">
+
+💬 WHATSAPP
+
+</a>
+
 </div>
-    <div class="card">Región: Latinoamérica</div>
+
+<!-- BOTONES LARGOS -->
+
+<div class="menu">
+
+<a href="#">
+⚡ APLICACIONES DE SAXTRA
+</a>
+
+<a href="#">
+👤 CUENTA SECUNDARIA
+</a>
+
+<a href="https://mediafire.com" target="_blank">
+📁 MEDIAFIRE MOD MENU
+</a>
+
+<a href="https://mediafire.com" target="_blank">
+🔥 MEDIAFIRE PANEL VIP
+</a>
+
+<a href="https://mediafire.com" target="_blank">
+🎮 MEDIAFIRE APK GAMER
+</a>
+
+<a href="https://mediafire.com" target="_blank">
+🚀 MEDIAFIRE ACTUALIZACIÓN
+</a>
+
 </div>
 
+<div class="footer">
 
-<!-- CONFIGURACIÓN -->
-<div class="section">
-    <h2>⚙️ Configuración</h2>
+CREATED BY SAXTRA
 
-    <div class="config">
-        <div>Sensibilidad General: 185</div>
-        <div>Punto Rojo: 60</div>
-        <div>Mira 2x: 115</div>
-        <div>Mira 4x: 100</div>
-        <div>AWM: 80</div>
-<div onclick="mostrarHUD()" style="cursor:pointer;">
-HUD: Personalizado
 </div>
-    </div>
-</div>
-<script>
-function mostrarHUD(){
-    alert("#FFHUDT6O3j8EE0J9Po7eN");
-}
-</script>
 
-<!-- REDES -->
-<div class="section">
-    <h2>🌐 Mis Redes</h2>
-
-    <a href="https://www.tiktok.com/@soy_saxtra?_r=1&_t=ZS-964TCDZTRUz" target="_blank" class="btn tiktok">TikTok</a>
-    <a href="https://www.instagram.com/soy_saxtra?igsh=anhxcHY0cXZhNGxy" target="_blank" class="btn instagram">Instagram</a>
-    <a href="https://youtube.com/@soy_saxtra?si=ClLDXBtpREnHM2jW" target="_blank" class="btn youtube">YouTube</a>
-    <a href="https://kick.com/soysaxtra" target="_blank" class="btn discord">Kick</a>
-</div>
+</body>
+</html>
