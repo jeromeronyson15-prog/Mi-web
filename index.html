@@ -5,7 +5,10 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
 
 <title>CHAT PRO MAX</title>
 
@@ -18,13 +21,21 @@ box-sizing:border-box;
 font-family:Arial;
 }
 
+/* BLOQUEAR MOVIMIENTO */
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+position:fixed;
+touch-action:none;
+}
+
 body{
 background:linear-gradient(135deg,#000,#111,#1b1b1b);
-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
 color:white;
 }
 
@@ -44,12 +55,15 @@ z-index:-1;
 }
 
 @keyframes mover{
+
 0%{
 transform:translate(0,0);
 }
+
 100%{
 transform:translate(-120px,-120px);
 }
+
 }
 
 /* CONTENEDOR */
@@ -148,6 +162,8 @@ height:30px;
 #chat{
 flex:1;
 overflow-y:auto;
+-webkit-overflow-scrolling:touch;
+touch-action:pan-y;
 padding:15px;
 display:flex;
 flex-direction:column;
@@ -165,14 +181,17 @@ box-shadow:0 0 10px #000;
 }
 
 @keyframes aparecer{
+
 from{
 transform:scale(0.8);
 opacity:0;
 }
+
 to{
 transform:scale(1);
 opacity:1;
 }
+
 }
 
 .nombre{
@@ -221,6 +240,8 @@ transition:0.3s;
 transform:scale(1.05);
 }
 
+/* SCROLL */
+
 #chat::-webkit-scrollbar{
 width:5px;
 }
@@ -238,7 +259,7 @@ border-radius:10px;
 <div id="container">
 
 <div id="top">
-💬 CHAT DOMI
+💬 CHAT PRO MAX
 </div>
 
 <!-- LOGIN -->
