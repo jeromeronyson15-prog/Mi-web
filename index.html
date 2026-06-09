@@ -154,67 +154,47 @@ body{
 <body>
   <div id="login-screen">
     <div class="login-box">
-
         <h2>Iniciar sesión</h2>
-
-        <button id="googleLogin">
-            🔵 Entrar con Google
-        </button>
-
+        <button id="googleLogin">🔵 Entrar con Google</button>
     </div>
 </div>
 
 <div id="main-content">
-
     <h1 class="logo">Kyzen_Rz</h1>
 
-    <!-- ADMIN -->
     <div class="admin">
         <button id="deleteChat">🗑 Borrar Chat</button>
     </div>
 
-    <!-- VIDEOS CON DESCRIPCIÓN -->
     <div class="media-card">
         <a class="btn-download" href="#">Botón 1</a>
         <h3>Descripción del video 1</h3>
-
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
     </div>
 
     <div class="media-card">
         <a class="btn-download" href="#">Botón 2</a>
         <h3>Descripción del video 2</h3>
-
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
     </div>
 
     <div class="media-card">
         <a class="btn-download" href="#">Botón 3</a>
         <h3>Descripción del video 3</h3>
-
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
     </div>
 
-    <!-- CHAT -->
     <div class="media-card">
-
         <h3>Chat de la comunidad</h3>
-
         <div id="chat-box"></div>
-
         <div class="chat-input">
             <input type="text" id="msg" placeholder="Escribe...">
             <button id="send">Enviar</button>
         </div>
-
     </div>
-
 </div>
-<script type="module">
 
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
     getFirestore,
@@ -231,11 +211,11 @@ import {
 import {
     getAuth,
     GoogleAuthProvider,
-    signInWithPopup,
+    signInWithRedirect, // Cambiado para evitar error 403 en móviles
+    getRedirectResult,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB_DgW2fZ12q3Z4VlbBLEwOZwRbCQAALV4",
   authDomain: "kyzen-rz.firebaseapp.com",
@@ -256,7 +236,6 @@ const provider = new GoogleAuthProvider();
 const loginScreen = document.getElementById("login-screen");
 const mainContent = document.getElementById("main-content");
 const googleLogin = document.getElementById("googleLogin");
-
 const chatBox = document.getElementById("chat-box");
 const msg = document.getElementById("msg");
 const send = document.getElementById("send");
@@ -264,187 +243,113 @@ const deleteChat = document.getElementById("deleteChat");
 
 let currentUser = "";
 
-/* 🔥 LOGIN GOOGLE */
+/* 🔥 LOGIN GOOGLE (Usa Redirección en vez de Popup) */
 googleLogin.addEventListener("click", async () => {
     try {
-        await signInWithPopup(auth, provider);
+        await signInWithRedirect(auth, provider);
     } catch (error) {
-        console.error(error);
+        console.error("Error en login:", error);
     }
 });
 
-/* 🔥 DETECTAR USUARIO */
-onAuthStateChanged(auth, (user) => {
+/* DETECTAR CONFIGURACIÓN DE REDIRECCIÓN AL VOLVER */
+getRedirectResult(auth).catch((error) => {
+    console.error("Error al retornar del login:", error);
+});
 
+/* DETECTAR ESTADO DEL USUARIO */
+onAuthStateChanged(auth, (user) => {
     if (user) {
         currentUser = user.displayName;
+        localStorage.setItem("user", currentUser); // Guarda en LocalStorage de forma segura
 
         loginScreen.style.display = "none";
         mainContent.style.display = "block";
-
         loadChat();
+    } else {
+        // Si no está logueado en Firebase, revisa LocalStorage por si acaso
+        let savedUser = localStorage.getItem("user");
+        if (savedUser) {
+            currentUser = savedUser;
+            loginScreen.style.display = "none";
+            mainContent.style.display = "block";
+            loadChat();
+        }
     }
-
 });
 
 /* ENVIAR MENSAJE */
 send.addEventListener("click", async () => {
-
     const text = msg.value.trim();
     if (!text) return;
 
-    await addDoc(collection(db, "messages"), {
-        user: currentUser,
-        text: text,
-        time: Date.now()
-    });
-
-    msg.value = "";
-});
-
-/* CARGAR CHAT */
-function loadChat() {
-
-    const q = query(collection(db, "messages"), orderBy("time", "asc"));
-
-    onSnapshot(q, (snap) => {
-
-        chatBox.innerHTML = "";
-
-        snap.forEach(docu => {
-
-            const d = docu.data();
-
-            const div = document.createElement("div");
-            div.style.margin = "8px 0";
-
-            div.innerHTML = `
-                <b style="color:#00adb5">${d.user}:</b> 
-                <span>${d.text}</span>
-            `;
-
-            chatBox.appendChild(div);
+    try {
+        await addDoc(collection(db, "messages"), {
+            user: currentUser || "Anónimo",
+            text: text,
+            time: Date.now()
         });
-
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
-}
-
-/* ENTER */
-msg.addEventListener("keydown", e => {
-    if (e.key === "Enter") send.click();
-});
-
-/* BORRAR CHAT */
-deleteChat.addEventListener("click", async () => {
-
-    const pass = prompt("Contraseña admin:");
-
-    if (pass !== "1234") {
-        alert("Incorrecto");
-        return;
+        msg.value = "";
+    } catch (e) {
+        console.error("Error al enviar mensaje:", e);
     }
-
-    const snap = await getDocs(collection(db, "messages"));
-
-    snap.forEach(async (d) => {
-        await deleteDoc(doc(db, "messages", d.id));
-    });
-
-    alert("Chat eliminado");
 });
 
-</script>
-<script>
-
-/* 🔥 LOGIN AUTOMÁTICO NO VOLVER A INICIAR */
-let savedUser = localStorage.getItem("user");
-
-if (savedUser) {
-    currentUser = savedUser;
-    loginScreen.style.display = "none";
-    mainContent.style.display = "block";
-    loadChat();
-}
-
-/* GUARDAR USUARIO */
-function saveUser(user) {
-    localStorage.setItem("user", user);
-}
-
-/* ACTUALIZAR LOGIN DESPUÉS DE GOOGLE */
-function setUser(user) {
-    currentUser = user;
-    saveUser(user);
-}
-
-/* BORRAR MENSAJE PROTEGIDO (EXTRA SEGURIDAD SIMPLE) */
-function canDelete(pass) {
-    return pass === "1234";
-}
-
-/* MEJOR VISUAL DE MENSAJES */
+/* FUNCIÓN PARA RENDERIZAR MENSAJES */
 function createMessage(data) {
-
     const div = document.createElement("div");
     div.style.margin = "8px 0";
 
     const user = document.createElement("b");
     user.style.color = "#00adb5";
-    user.textContent = data.user + ": ";
+    user.textContent = (data.user || "Anónimo") + ": ";
 
     const text = document.createElement("span");
     text.textContent = data.text;
 
     div.appendChild(user);
     div.appendChild(text);
-
     return div;
 }
 
-/* REEMPLAZAR RENDER CHAT (MEJORADO) */
+/* CARGAR CHAT */
 function loadChat() {
-
     const q = query(collection(db, "messages"), orderBy("time", "asc"));
 
     onSnapshot(q, (snap) => {
-
         chatBox.innerHTML = "";
-
         snap.forEach(docu => {
-
             const data = docu.data();
             chatBox.appendChild(createMessage(data));
-
         });
-
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
 
-/* LIMPIAR CHAT CON SEGURIDAD */
+/* ENVIAR CON ENTER */
+msg.addEventListener("keydown", e => {
+    if (e.key === "Enter") send.click();
+});
+
+/* BORRAR CHAT (ADMIN) */
 deleteChat.addEventListener("click", async () => {
-
     const pass = prompt("Contraseña admin:");
-
-    if (!canDelete(pass)) {
+    if (pass !== "1234") {
         alert("Incorrecto");
         return;
     }
 
-    const snap = await getDocs(collection(db, "messages"));
-
-    snap.forEach(async (d) => {
-        await deleteDoc(doc(db, "messages", d.id));
-    });
-
-    alert("Chat eliminado correctamente");
+    try {
+        const snap = await getDocs(collection(db, "messages"));
+        snap.forEach(async (d) => {
+            await deleteDoc(doc(db, "messages", d.id));
+        });
+        alert("Chat eliminado correctamente");
+    } catch (e) {
+        console.error("Error al borrar chat:", e);
+    }
 });
-
-/* EXPORT GLOBAL */
-window.setUser = setUser;
-
 </script>
 
 </body>
-    </html>
+</html>
