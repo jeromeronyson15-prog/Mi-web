@@ -22,10 +22,10 @@ body{
 #login-screen{
     position:fixed;
     inset:0;
-    background:rgba(13,14,18,.95);
     display:flex;
     justify-content:center;
     align-items:center;
+    background:rgba(13,14,18,.95);
 }
 
 .login-box{
@@ -34,33 +34,24 @@ body{
     border-radius:12px;
     width:90%;
     max-width:400px;
+    text-align:center;
     border:1px solid #30363d;
 }
 
 .login-box h2{
     color:#00adb5;
-    margin-bottom:15px;
-    text-align:center;
-}
-
-.login-box input{
-    width:100%;
-    padding:12px;
-    margin-bottom:10px;
-    border-radius:6px;
-    border:1px solid #30363d;
-    background:#0d0e12;
-    color:#fff;
+    margin-bottom:20px;
 }
 
 .login-box button{
     width:100%;
     padding:12px;
     border:none;
-    background:#00adb5;
-    color:#fff;
+    border-radius:8px;
+    background:#fff;
+    color:#000;
     font-weight:bold;
-    border-radius:6px;
+    cursor:pointer;
 }
 
 /* MAIN */
@@ -106,8 +97,8 @@ body{
 .media-card iframe{
     width:100%;
     height:220px;
-    margin-top:10px;
     border-radius:10px;
+    margin-top:10px;
 }
 
 /* CHAT */
@@ -121,8 +112,8 @@ body{
 
 .chat-input{
     display:flex;
-    margin-top:10px;
     gap:10px;
+    margin-top:10px;
 }
 
 .chat-input input{
@@ -138,8 +129,8 @@ body{
     padding:12px;
     background:#00adb5;
     border:none;
-    color:#fff;
     border-radius:6px;
+    color:#fff;
     font-weight:bold;
 }
 
@@ -154,19 +145,22 @@ body{
     background:red;
     border:none;
     color:#fff;
-    padding:1px;padding-block: 2px;
-    border-radius:3px;
+    padding:10px;
+    border-radius:8px;
 }
 </style>
 </head>
+
 <body>
   <div id="login-screen">
     <div class="login-box">
-        <h2>Kyzen_Rz Login</h2>
 
-        <input type="text" id="username" placeholder="Nombre de usuario">
+        <h2>Iniciar sesión</h2>
 
-        <button id="loginBtn">Entrar</button>
+        <button id="googleLogin">
+            🔵 Entrar con Google
+        </button>
+
     </div>
 </div>
 
@@ -174,26 +168,40 @@ body{
 
     <h1 class="logo">Kyzen_Rz</h1>
 
-    <!-- BOTÓN ADMIN -->
+    <!-- ADMIN -->
     <div class="admin">
-        <button id="deleteChat">X</button>
+        <button id="deleteChat">🗑 Borrar Chat</button>
     </div>
 
-    <!-- VIDEOS + DESCRIPCIÓN + YOUTUBE -->
+    <!-- VIDEOS CON DESCRIPCIÓN -->
     <div class="media-card">
-        <a class="btn-download" href="https://youtu.be/bKAOGxjmeJo?si=wnMFFgQxLudiIBy5">Botón 1</a>
+        <a class="btn-download" href="#">Botón 1</a>
         <h3>Descripción del video 1</h3>
 
-        <!-- YouTube correcto -->
-        <iframe src="http://youtube.com/post/Ugkx5gM67DbLQD51cRnXKh8cUXpGADJt0Lfi?si=vngqrH6mYhM7UATO"
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
         allowfullscreen></iframe>
     </div>
 
+    <div class="media-card">
+        <a class="btn-download" href="#">Botón 2</a>
+        <h3>Descripción del video 2</h3>
+
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="media-card">
+        <a class="btn-download" href="#">Botón 3</a>
+        <h3>Descripción del video 3</h3>
+
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        allowfullscreen></iframe>
+    </div>
 
     <!-- CHAT -->
     <div class="media-card">
 
-        <h3>Chat</h3>
+        <h3>Chat de la comunidad</h3>
 
         <div id="chat-box"></div>
 
@@ -206,6 +214,7 @@ body{
 
 </div>
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
     getFirestore,
@@ -218,6 +227,13 @@ import {
     getDocs,
     doc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -233,50 +249,48 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 /* ELEMENTOS */
 const loginScreen = document.getElementById("login-screen");
 const mainContent = document.getElementById("main-content");
-const username = document.getElementById("username");
-const loginBtn = document.getElementById("loginBtn");
+const googleLogin = document.getElementById("googleLogin");
 
 const chatBox = document.getElementById("chat-box");
-const msgInput = document.getElementById("msg");
-const sendBtn = document.getElementById("send");
-const deleteBtn = document.getElementById("deleteChat");
+const msg = document.getElementById("msg");
+const send = document.getElementById("send");
+const deleteChat = document.getElementById("deleteChat");
 
 let currentUser = "";
 
-/* 🔥 LOGIN AUTOMÁTICO */
-let saved = localStorage.getItem("user");
+/* 🔥 LOGIN GOOGLE */
+googleLogin.addEventListener("click", async () => {
+    try {
+        await signInWithPopup(auth, provider);
+    } catch (error) {
+        console.error(error);
+    }
+});
 
-if (saved) {
-    currentUser = saved;
-    loginScreen.style.display = "none";
-    mainContent.style.display = "block";
-    loadChat();
-}
+/* 🔥 DETECTAR USUARIO */
+onAuthStateChanged(auth, (user) => {
 
-/* LOGIN */
-loginBtn.addEventListener("click", () => {
+    if (user) {
+        currentUser = user.displayName;
 
-    const name = username.value.trim();
+        loginScreen.style.display = "none";
+        mainContent.style.display = "block";
 
-    if (!name) return;
+        loadChat();
+    }
 
-    currentUser = name;
-    localStorage.setItem("user", name);
-
-    loginScreen.style.display = "none";
-    mainContent.style.display = "block";
-
-    loadChat();
 });
 
 /* ENVIAR MENSAJE */
-sendBtn.addEventListener("click", async () => {
+send.addEventListener("click", async () => {
 
-    const text = msgInput.value.trim();
+    const text = msg.value.trim();
     if (!text) return;
 
     await addDoc(collection(db, "messages"), {
@@ -285,7 +299,7 @@ sendBtn.addEventListener("click", async () => {
         time: Date.now()
     });
 
-    msgInput.value = "";
+    msg.value = "";
 });
 
 /* CARGAR CHAT */
@@ -317,16 +331,16 @@ function loadChat() {
 }
 
 /* ENTER */
-msgInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") sendBtn.click();
+msg.addEventListener("keydown", e => {
+    if (e.key === "Enter") send.click();
 });
 
-/* 🔥 BORRAR CHAT CON CONTRASEÑA */
-deleteBtn.addEventListener("click", async () => {
+/* BORRAR CHAT */
+deleteChat.addEventListener("click", async () => {
 
-    const pass = prompt("Contraseña de admin:");
+    const pass = prompt("Contraseña admin:");
 
-    if (pass !== "KEY") {
+    if (pass !== "1234") {
         alert("Incorrecto");
         return;
     }
@@ -337,9 +351,100 @@ deleteBtn.addEventListener("click", async () => {
         await deleteDoc(doc(db, "messages", d.id));
     });
 
-    alert("Chat borrado");
+    alert("Chat eliminado");
 });
+
+</script>
+<script>
+
+/* 🔥 LOGIN AUTOMÁTICO NO VOLVER A INICIAR */
+let savedUser = localStorage.getItem("user");
+
+if (savedUser) {
+    currentUser = savedUser;
+    loginScreen.style.display = "none";
+    mainContent.style.display = "block";
+    loadChat();
+}
+
+/* GUARDAR USUARIO */
+function saveUser(user) {
+    localStorage.setItem("user", user);
+}
+
+/* ACTUALIZAR LOGIN DESPUÉS DE GOOGLE */
+function setUser(user) {
+    currentUser = user;
+    saveUser(user);
+}
+
+/* BORRAR MENSAJE PROTEGIDO (EXTRA SEGURIDAD SIMPLE) */
+function canDelete(pass) {
+    return pass === "1234";
+}
+
+/* MEJOR VISUAL DE MENSAJES */
+function createMessage(data) {
+
+    const div = document.createElement("div");
+    div.style.margin = "8px 0";
+
+    const user = document.createElement("b");
+    user.style.color = "#00adb5";
+    user.textContent = data.user + ": ";
+
+    const text = document.createElement("span");
+    text.textContent = data.text;
+
+    div.appendChild(user);
+    div.appendChild(text);
+
+    return div;
+}
+
+/* REEMPLAZAR RENDER CHAT (MEJORADO) */
+function loadChat() {
+
+    const q = query(collection(db, "messages"), orderBy("time", "asc"));
+
+    onSnapshot(q, (snap) => {
+
+        chatBox.innerHTML = "";
+
+        snap.forEach(docu => {
+
+            const data = docu.data();
+            chatBox.appendChild(createMessage(data));
+
+        });
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+}
+
+/* LIMPIAR CHAT CON SEGURIDAD */
+deleteChat.addEventListener("click", async () => {
+
+    const pass = prompt("Contraseña admin:");
+
+    if (!canDelete(pass)) {
+        alert("Incorrecto");
+        return;
+    }
+
+    const snap = await getDocs(collection(db, "messages"));
+
+    snap.forEach(async (d) => {
+        await deleteDoc(doc(db, "messages", d.id));
+    });
+
+    alert("Chat eliminado correctamente");
+});
+
+/* EXPORT GLOBAL */
+window.setUser = setUser;
+
 </script>
 
 </body>
-</html>
+    </html>
