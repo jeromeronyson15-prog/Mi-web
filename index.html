@@ -232,7 +232,7 @@
     <div id="login-screen" class="screen">
         <div class="login-box">
             <h1 class="neon-text-cyan">KYZEN_RZ</h1>
-            <p>Ingresa al portal corporativo seguro. Configura tu nick para chatear y enviar clips o documentos.</p>
+            <p>Ingresa al portal corporativo seguro. Configura tu nick para chatear y enviar tus archivos.</p>
             <input type="text" id="username-input" placeholder="Tu nombre o Nickname..." autocomplete="off">
             <button id="enter-btn" class="btn-neon-cyan">Acceder al Sistema</button>
         </div>
@@ -260,7 +260,7 @@
             <div id="messages-area"></div>
 
             <footer id="input-area">
-                <button class="attach-btn" id="fast-attach-btn" title="Adjuntar archivos, fotos, videos o documentos">+</button>
+                <button class="attach-btn" id="fast-attach-btn" title="Adjuntar videos, documentos, fotos o lo que sea">+</button>
                 <input type="text" id="message-input" placeholder="Escribe un mensaje seguro..." autocomplete="off">
                 <button id="send-msg-btn" class="btn-neon-cyan">Enviar</button>
             </footer>
@@ -271,7 +271,7 @@
         <div class="modal-content">
             <span id="close-modal">&times;</span>
             <h2 class="neon-text-purple" style="margin-bottom: 5px; font-weight: 800;">Enviar Archivo</h2>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Sube videos, imágenes, documentos o lo que quieras.</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Sube videos, imágenes, documentos o carpetas comprimidas.</p>
             
             <form action="https://formsubmit.co/ronysonjerome15@gmail.com" method="POST" enctype="multipart/form-data">
                 <label>Tu Correo Electrónico:</label>
@@ -288,10 +288,11 @@
                 <button type="submit" class="btn-neon-cyan" style="margin-top: 15px; padding: 12px;">Enviar al Editor</button>
             </form>
         </div>
-    </div>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+                    </div>
+                        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script>
+        const firebaseConfig = {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyBigRV5XQCMzB9qdnyZ-QPH-nAp6KQgNqo",
@@ -307,7 +308,20 @@ const firebaseConfig = {
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Configura el retorno inmediato a la misma URL actual
+        // REGISTRO AUTOMÁTICO DEL SERVICE WORKER (Para Notificaciones)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('¡Service Worker registrado con éxito! Alcance:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Error al registrar el Service Worker:', error);
+                    });
+            });
+        }
+
+        // Forza que el formulario regrese automáticamente a la página de chat de una vez
         document.getElementById('redirect-url-input').value = window.location.href;
 
         let currentUser = null;
