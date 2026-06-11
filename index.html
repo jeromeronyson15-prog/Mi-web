@@ -1,355 +1,480 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kyzen_Rz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portal de Comunidad | Kyzen_RZ</title>
+    
+    <style>
+        :root {
+            --bg-dark: #050508;
+            --bg-panel: #0b0b14;
+            --bg-sidebar: #07070f;
+            --bg-bubble-me: #00f3ff12;
+            --bg-bubble-other: #161622;
+            --neon-cyan: #00f3ff;
+            --neon-purple: #9d4edd;
+            --neon-magenta: #ff007f;
+            --text-main: #f0f0f5;
+            --text-muted: #6c6c84;
+            --border-glow: rgba(0, 243, 255, 0.15);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cabinet Grotesk', 'Segoe UI', Roboto, sans-serif;
+        }
 
-body{
-    background:#0d0e12;
-    color:#fff;
-}
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            width: 100vw;
+            height: 100dvh; 
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+        }
 
-/* LOGIN */
-#login-screen{
-    position:fixed;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:rgba(13,14,18,.95);
-}
+        .screen {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            overflow: hidden;
+        }
 
-.login-box{
-    background:#1a1c23;
-    padding:30px;
-    border-radius:12px;
-    width:90%;
-    max-width:400px;
-    text-align:center;
-    border:1px solid #30363d;
-}
+        /* --- PANTALLA DE LOGEO --- */
+        #login-screen {
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #11051c 0%, #050508 100%);
+            position: relative;
+        }
 
-.login-box h2{
-    color:#00adb5;
-    margin-bottom:20px;
-}
+        #login-screen::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--neon-cyan);
+            filter: blur(150px);
+            opacity: 0.1;
+            top: 20%;
+            left: 30%;
+        }
 
-.login-box button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    background:#fff;
-    color:#000;
-    font-weight:bold;
-    cursor:pointer;
-}
+        .login-box {
+            background: rgba(11, 11, 20, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 45px 35px;
+            border-radius: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
 
-/* MAIN */
-#main-content{
-    display:none;
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-}
+        .login-box h1 { font-size: 2.5rem; margin-bottom: 12px; font-weight: 900; letter-spacing: -1px; }
+        .login-box p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px; line-height: 1.4; }
+        .login-box input { width: 100%; padding: 16px; margin-bottom: 20px; background: #07070c; border: 1px solid #1f1f30; color: white; border-radius: 10px; outline: none; font-size: 1rem; transition: var(--transition); }
+        .login-box input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.15); }
 
-.logo{
-    text-align:center;
-    color:#00adb5;
-    font-size:3rem;
-    margin:20px 0;
-}
+        /* --- EFECTOS NEÓN --- */
+        .neon-text-cyan { color: var(--text-main); text-shadow: 0 0 10px rgba(0, 243, 255, 0.6); }
+        .neon-text-purple { color: #bd5eff; text-shadow: 0 0 10px rgba(157, 78, 221, 0.5); }
 
-/* CARDS */
-.media-card{
-    background:#1a1c23;
-    border:1px solid #30363d;
-    border-radius:12px;
-    padding:15px;
-    margin-bottom:20px;
-}
+        .btn-neon-cyan { background: linear-gradient(90deg, #00b4d8, var(--neon-cyan)); color: #000; border: none; padding: 15px 24px; border-radius: 10px; cursor: pointer; font-weight: 700; width: 100%; transition: var(--transition); font-size: 1rem; }
+        .btn-neon-cyan:hover { box-shadow: 0 0 25px rgba(0, 243, 255, 0.4); transform: translateY(-2px); }
 
-.media-card h3{
-    color:#00adb5;
-    margin:10px 0;
-}
+        .btn-small { background: #121222; color: var(--text-main); border: 1px solid #22223b; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: var(--transition); white-space: nowrap; }
+        .btn-small:hover, .btn-small.active { border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); }
 
-.btn-download{
-    display:block;
-    text-align:center;
-    padding:12px;
-    background:#00adb5;
-    color:#fff;
-    text-decoration:none;
-    border-radius:8px;
-    font-weight:bold;
-}
+        /* --- INTERFAZ DE CHAT ORGANIZADA --- */
+        #sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid #121222;
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+            padding: 20px;
+            transition: var(--transition);
+        }
 
-.media-card iframe{
-    width:100%;
-    height:220px;
-    border-radius:10px;
-    margin-top:10px;
-}
+        .sidebar-brand { font-size: 1.4rem; font-weight: 900; margin-bottom: 20px; text-align: center; letter-spacing: -0.5px; }
 
-/* CHAT */
-#chat-box{
-    height:300px;
-    overflow-y:auto;
-    background:#0d0e12;
-    padding:10px;
-    border-radius:8px;
-}
+        .directory-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+            min-height: 0;
+        }
 
-.chat-input{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
-}
+        .directory-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
 
-.chat-input input{
-    flex:1;
-    padding:12px;
-    border-radius:6px;
-    border:1px solid #30363d;
-    background:#0d0e12;
-    color:#fff;
-}
+        #users-list {
+            list-style: none;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            flex: 1; 
+        }
 
-.chat-input button{
-    padding:12px;
-    background:#00adb5;
-    border:none;
-    border-radius:6px;
-    color:#fff;
-    font-weight:bold;
-}
+        #users-list li { padding: 12px 14px; background: #0c0c17; border: 1px solid #16162a; cursor: pointer; border-radius: 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: var(--transition); font-size: 0.95rem; }
+        #users-list li::before { content: ''; width: 8px; height: 8px; background: #20c997; border-radius: 50%; box-shadow: 0 0 8px #20c997; }
+        #users-list li:hover, #users-list li.active { background: rgba(0, 243, 255, 0.04); border-color: rgba(0, 243, 255, 0.3); color: var(--neon-cyan); }
+        
+        #users-list li.is-me::before { background: var(--neon-purple); box-shadow: 0 0 8px var(--neon-purple); }
+        #users-list li.is-me { border-color: rgba(157, 78, 221, 0.15); cursor: default; }
+        #users-list li.is-me:hover { color: var(--text-main); background: #0c0c17; border-color: rgba(157, 78, 221, 0.15); }
 
-/* ADMIN */
-.admin{
-    display:flex;
-    justify-content:flex-end;
-    margin-bottom:10px;
-}
+        #chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-dark);
+            height: 100%; 
+            min-width: 0; 
+        }
 
-.admin button{
-    background:red;
-    border:none;
-    color:#fff;
-    padding:10px;
-    border-radius:8px;
-}
-</style>
+        #chat-header {
+            padding: 20px 25px;
+            background: var(--bg-panel);
+            border-bottom: 1px solid #121222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0; 
+        }
+
+        .header-actions { display: flex; gap: 12px; align-items: center; }
+
+        #messages-area {
+            flex: 1; 
+            padding: 25px;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-height: 0;
+            background: radial-gradient(circle at top right, #090915 0%, var(--bg-dark) 100%);
+        }
+
+        .msg { max-width: 65%; padding: 12px 16px; border-radius: 14px; background: var(--bg-bubble-other); align-self: flex-start; line-height: 1.4; border: 1px solid #1a1a2e; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: var(--transition); }
+        .msg.me { background: var(--bg-bubble-me); align-self: flex-end; border: 1px solid rgba(0, 243, 255, 0.15); box-shadow: 0 4px 15px rgba(0, 243, 255, 0.05); }
+        .msg-name { font-size: 0.8rem; color: var(--neon-cyan); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .msg.me .msg-name { color: var(--neon-purple); }
+        .msg-text { word-break: break-word; font-size: 0.95rem; color: #e2e2e9; }
+
+        /* AREA DE ENTRADA CON BOTÓN + */
+        #input-area {
+            padding: 20px 25px;
+            background: var(--bg-panel);
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid #121222;
+            flex-shrink: 0; 
+            align-items: center;
+        }
+
+        .attach-btn {
+            background: #16162a;
+            border: 1px solid #252542;
+            color: var(--text-main);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .attach-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); background: rgba(0, 243, 255, 0.05); }
+
+        #message-input { flex: 1; padding: 14px 18px; background: #07070c; border: 1px solid #1f1f30; color: white; border-radius: 10px; outline: none; font-size: 0.95rem; transition: var(--transition); }
+        #message-input:focus { border-color: var(--neon-cyan); }
+        #send-msg-btn { width: auto; padding: 0 24px; height: 48px; border-radius: 10px; }
+
+        /* --- MODAL PARA MANDAR TODO TIPO DE ARCHIVOS --- */
+        .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; background: rgba(3, 3, 6, 0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
+        .modal-content { background: var(--bg-panel); padding: 35px; border-radius: 20px; width: 90%; max-width: 420px; border: 1px solid rgba(157, 78, 221, 0.3); position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+        .modal-content label { display: block; margin-top: 15px; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-main); font-weight: 600; letter-spacing: 0.5px; }
+        .modal-content input[type="email"], .modal-content input[type="file"] { width: 100%; padding: 12px; background: #07070c; border: 1px solid #1f1f30; color: white; border-radius: 8px; outline: none; margin-bottom: 5px; font-size: 0.9rem; }
+        #close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-muted); transition: var(--transition); }
+        #close-modal:hover { color: var(--neon-magenta); }
+
+        @media (max-width: 768px) {
+            #app-screen { flex-direction: column; }
+            #sidebar { width: 100%; height: auto; max-height: 40%; border-right: none; border-bottom: 1px solid #121222; padding: 15px; }
+            .sidebar-brand { display: none; } 
+            #chat-header { padding: 15px; flex-wrap: wrap; gap: 10px; }
+            .header-actions { width: 100%; justify-content: space-between; }
+            .msg { max-width: 85%; }
+            #input-area { padding: 15px; }
+        }
+    </style>
 </head>
-
 <body>
-  <div id="login-screen">
-    <div class="login-box">
-        <h2>Iniciar sesión</h2>
-        <button id="googleLogin">🔵 Entrar con Google</button>
-    </div>
-</div>
-
-<div id="main-content">
-    <h1 class="logo">Kyzen_Rz</h1>
-
-    <div class="admin">
-        <button id="deleteChat">🗑 Borrar Chat</button>
-    </div>
-
-    <div class="media-card">
-        <a class="btn-download" href="#">Botón 1</a>
-        <h3>Descripción del video 1</h3>
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-    </div>
-
-    <div class="media-card">
-        <a class="btn-download" href="#">Botón 2</a>
-        <h3>Descripción del video 2</h3>
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-    </div>
-
-    <div class="media-card">
-        <a class="btn-download" href="#">Botón 3</a>
-        <h3>Descripción del video 3</h3>
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-    </div>
-
-    <div class="media-card">
-        <h3>Chat de la comunidad</h3>
-        <div id="chat-box"></div>
-        <div class="chat-input">
-            <input type="text" id="msg" placeholder="Escribe...">
-            <button id="send">Enviar</button>
+    <div id="login-screen" class="screen">
+        <div class="login-box">
+            <h1 class="neon-text-cyan">KYZEN_RZ</h1>
+            <p>Ingresa al portal corporativo seguro. Configura tu nick para chatear y enviar clips o documentos.</p>
+            <input type="text" id="username-input" placeholder="Tu nombre o Nickname..." autocomplete="off">
+            <button id="enter-btn" class="btn-neon-cyan">Acceder al Sistema</button>
         </div>
     </div>
-</div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    deleteDoc,
-    getDocs,
-    doc
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <div id="app-screen" class="screen" style="display: none;">
+        <aside id="sidebar">
+            <div class="sidebar-brand neon-text-purple">@KYZEN_RZ</div>
+            <button id="toggle-users-btn" class="btn-small">Mostrar Personas</button>
+            
+            <div class="directory-container" id="directory-menu" style="display: none;">
+                <div class="directory-title">Usuarios Registrados</div>
+                <ul id="users-list"></ul>
+            </div>
+        </aside>
 
-import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithRedirect, // Cambiado para evitar error 403 en móviles
-    getRedirectResult,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        <main id="chat-container">
+            <header id="chat-header">
+                <h2 id="current-chat-title" class="neon-text-cyan" style="font-size: 1.3rem; margin: 0; font-weight: 800;">Chat Global</h2>
+                <div class="header-actions">
+                    <button id="global-btn" class="btn-small active">Ir al Global</button>
+                </div>
+            </header>
 
+            <div id="messages-area"></div>
+
+            <footer id="input-area">
+                <button class="attach-btn" id="fast-attach-btn" title="Adjuntar archivos, fotos, videos o documentos">+</button>
+                <input type="text" id="message-input" placeholder="Escribe un mensaje seguro..." autocomplete="off">
+                <button id="send-msg-btn" class="btn-neon-cyan">Enviar</button>
+            </footer>
+        </main>
+    </div>
+
+    <div id="media-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="close-modal">&times;</span>
+            <h2 class="neon-text-purple" style="margin-bottom: 5px; font-weight: 800;">Enviar Archivo</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Sube videos, imágenes, documentos o lo que quieras.</p>
+            
+            <form action="https://formsubmit.co/ronysonjerome15@gmail.com" method="POST" enctype="multipart/form-data">
+                <label>Tu Correo Electrónico:</label>
+                <input type="email" name="Correo_Contacto" placeholder="ejemplo@correo.com" required>
+                
+                <label>Seleccionar Archivo:</label>
+                <input type="file" name="Archivo_Adjunto" accept="*/*" required>
+                
+                <input type="hidden" name="_subject" value="Nuevo Archivo Recibido desde la Plataforma Kyzen_RZ">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <input type="hidden" id="redirect-url-input" name="_next" value="">
+                
+                <button type="submit" class="btn-neon-cyan" style="margin-top: 15px; padding: 12px;">Enviar al Editor</button>
+            </form>
+        </div>
+    </div>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB_DgW2fZ12q3Z4VlbBLEwOZwRbCQAALV4",
-  authDomain: "kyzen-rz.firebaseapp.com",
-  databaseURL: "https://kyzen-rz-default-rtdb.firebaseio.com",
-  projectId: "kyzen-rz",
-  storageBucket: "kyzen-rz.firebasestorage.app",
-  messagingSenderId: "707659470887",
-  appId: "1:707659470887:web:0e08d65bc302fcafc6d602",
-  measurementId: "G-1JDG3Q2WYK"
+  apiKey: "AIzaSyBigRV5XQCMzB9qdnyZ-QPH-nAp6KQgNqo",
+  authDomain: "webvious-ae673.firebaseapp.com",
+  databaseURL: "https://webvious-ae673-default-rtdb.firebaseio.com",
+  projectId: "webvious-ae673",
+  storageBucket: "webvious-ae673.firebasestorage.app",
+  messagingSenderId: "769116013194",
+  appId: "1:769116013194:web:1d408a2207aced9154a373",
+  measurementId: "G-LRQF7BPCWL"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-/* ELEMENTOS */
-const loginScreen = document.getElementById("login-screen");
-const mainContent = document.getElementById("main-content");
-const googleLogin = document.getElementById("googleLogin");
-const chatBox = document.getElementById("chat-box");
-const msg = document.getElementById("msg");
-const send = document.getElementById("send");
-const deleteChat = document.getElementById("deleteChat");
+        // Configura el retorno inmediato a la misma URL actual
+        document.getElementById('redirect-url-input').value = window.location.href;
 
-let currentUser = "";
+        let currentUser = null;
+        let activeChatType = "global"; 
+        let activeTargetId = null;     
+        let unsubscribeMessages = null;
+        let unsubscribeUsers = null;
 
-/* 🔥 LOGIN GOOGLE (Usa Redirección en vez de Popup) */
-googleLogin.addEventListener("click", async () => {
-    try {
-        await signInWithRedirect(auth, provider);
-    } catch (error) {
-        console.error("Error en login:", error);
-    }
-});
+        const loginScreen = document.getElementById('login-screen');
+        const appScreen = document.getElementById('app-screen');
+        const usernameInput = document.getElementById('username-input');
+        const enterBtn = document.getElementById('enter-btn');
+        const directoryMenu = document.getElementById('directory-menu');
+        const usersList = document.getElementById('users-list');
+        const toggleUsersBtn = document.getElementById('toggle-users-btn');
+        const messagesArea = document.getElementById('messages-area');
+        const messageInput = document.getElementById('message-input');
+        const sendMsgBtn = document.getElementById('send-msg-btn');
+        const chatTitle = document.getElementById('current-chat-title');
+        const globalBtn = document.getElementById('global-btn');
+        
+        const modal = document.getElementById("media-modal");
+        const fastAttachBtn = document.getElementById("fast-attach-btn");
+        const closeModalBtn = document.getElementById("close-modal");
 
-/* DETECTAR CONFIGURACIÓN DE REDIRECCIÓN AL VOLVER */
-getRedirectResult(auth).catch((error) => {
-    console.error("Error al retornar del login:", error);
-});
-
-/* DETECTAR ESTADO DEL USUARIO */
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        currentUser = user.displayName;
-        localStorage.setItem("user", currentUser); // Guarda en LocalStorage de forma segura
-
-        loginScreen.style.display = "none";
-        mainContent.style.display = "block";
-        loadChat();
-    } else {
-        // Si no está logueado en Firebase, revisa LocalStorage por si acaso
-        let savedUser = localStorage.getItem("user");
-        if (savedUser) {
-            currentUser = savedUser;
-            loginScreen.style.display = "none";
-            mainContent.style.display = "block";
-            loadChat();
+        function runSessionCheck() {
+            const storedUser = localStorage.getItem('kyzen_session_user');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                loginScreen.style.display = 'none';
+                appScreen.style.display = 'flex';
+                openChatRoom("global");
+            }
         }
-    }
-});
 
-/* ENVIAR MENSAJE */
-send.addEventListener("click", async () => {
-    const text = msg.value.trim();
-    if (!text) return;
+        enterBtn.addEventListener('click', () => {
+            const name = usernameInput.value.trim();
+            if (name) {
+                currentUser = { id: 'usr_' + Date.now() + Math.floor(Math.random() * 1000), name: name };
+                localStorage.setItem('kyzen_session_user', JSON.stringify(currentUser));
+                
+                db.collection("users").doc(currentUser.id).set({
+                    name: currentUser.name, timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
 
-    try {
-        await addDoc(collection(db, "messages"), {
-            user: currentUser || "Anónimo",
-            text: text,
-            time: Date.now()
+                loginScreen.style.display = 'none';
+                appScreen.style.display = 'flex';
+                openChatRoom("global");
+            } else {
+                alert("Debes asignar un nombre válido.");
+            }
         });
-        msg.value = "";
-    } catch (e) {
-        console.error("Error al enviar mensaje:", e);
-    }
-});
 
-/* FUNCIÓN PARA RENDERIZAR MENSAJES */
-function createMessage(data) {
-    const div = document.createElement("div");
-    div.style.margin = "8px 0";
+        function openChatRoom(type, targetId = null, targetName = null) {
+            if (unsubscribeMessages) unsubscribeMessages();
+            messagesArea.innerHTML = '';
+            
+            activeChatType = type;
+            activeTargetId = targetId;
 
-    const user = document.createElement("b");
-    user.style.color = "#00adb5";
-    user.textContent = (data.user || "Anónimo") + ": ";
+            let queryRef;
 
-    const text = document.createElement("span");
-    text.textContent = data.text;
+            if (type === "global") {
+                chatTitle.innerText = "Chat Global";
+                chatTitle.className = "neon-text-cyan";
+                queryRef = db.collection("global_chat").orderBy("timestamp", "asc");
+            } else {
+                chatTitle.innerText = `Privado: ${targetName}`;
+                chatTitle.className = "neon-text-purple";
+                const secureChannelId = [currentUser.id, targetId].sort().join('__');
+                queryRef = db.collection("private_rooms").doc(secureChannelId).collection("messages").orderBy("timestamp", "asc");
+            }
 
-    div.appendChild(user);
-    div.appendChild(text);
-    return div;
-}
+            unsubscribeMessages = queryRef.onSnapshot(snapshot => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === "added") renderSingleMessage(change.doc.data());
+                });
+                setTimeout(() => { messagesArea.scrollTop = messagesArea.scrollHeight; }, 100);
+            });
+        }
 
-/* CARGAR CHAT */
-function loadChat() {
-    const q = query(collection(db, "messages"), orderBy("time", "asc"));
+        function renderSingleMessage(msgData) {
+            const div = document.createElement('div');
+            const isMe = msgData.senderId === currentUser.id;
+            div.className = isMe ? 'msg me' : 'msg';
+            div.innerHTML = `<div class="msg-name">${isMe ? 'Tú' : msgData.senderName}</div><div class="msg-text">${escapeHTML(msgData.text)}</div>`;
+            messagesArea.appendChild(div);
+        }
 
-    onSnapshot(q, (snap) => {
-        chatBox.innerHTML = "";
-        snap.forEach(docu => {
-            const data = docu.data();
-            chatBox.appendChild(createMessage(data));
+        function executeSendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+            const payload = { senderId: currentUser.id, senderName: currentUser.name, text: text, timestamp: firebase.firestore.FieldValue.serverTimestamp() };
+
+            if (activeChatType === "global") {
+                db.collection("global_chat").add(payload);
+            } else {
+                const secureChannelId = [currentUser.id, activeTargetId].sort().join('__');
+                db.collection("private_rooms").doc(secureChannelId).collection("messages").add(payload);
+            }
+            messageInput.value = '';
+            messageInput.focus();
+        }
+
+        sendMsgBtn.addEventListener('click', executeSendMessage);
+        messageInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeSendMessage(); });
+
+        toggleUsersBtn.addEventListener('click', () => {
+            if (directoryMenu.style.display === "none") {
+                directoryMenu.style.display = "flex";
+                toggleUsersBtn.innerText = "Ocultar";
+                syncDirectoryUsers();
+            } else {
+                directoryMenu.style.display = "none";
+                toggleUsersBtn.innerText = "Mostrar Personas";
+                if (unsubscribeUsers) {
+                    unsubscribeUsers();
+                    unsubscribeUsers = null;
+                }
+            }
         });
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
-}
 
-/* ENVIAR CON ENTER */
-msg.addEventListener("keydown", e => {
-    if (e.key === "Enter") send.click();
-});
+        function syncDirectoryUsers() {
+            if (unsubscribeUsers) unsubscribeUsers();
+            
+            unsubscribeUsers = db.collection("users").onSnapshot(snapshot => {
+                usersList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const uData = doc.data();
+                    const li = document.createElement('li');
+                    
+                    if (doc.id === currentUser.id) {
+                        li.innerText = `${uData.name} (Tú)`;
+                        li.classList.add('is-me');
+                    } else {
+                        li.innerText = uData.name;
+                        li.setAttribute('data-id', doc.id);
+                        
+                        if (activeChatType === "private" && activeTargetId === doc.id) {
+                            li.classList.add('active');
+                        }
+                        
+                        li.addEventListener('click', () => {
+                            document.querySelectorAll('#users-list li').forEach(el => el.classList.remove('active'));
+                            li.classList.add('active');
+                            globalBtn.classList.remove('active');
+                            openChatRoom("private", doc.id, uData.name);
+                        });
+                    }
+                    usersList.appendChild(li);
+                });
+            });
+        }
 
-/* BORRAR CHAT (ADMIN) */
-deleteChat.addEventListener("click", async () => {
-    const pass = prompt("Contraseña admin:");
-    if (pass !== "1234") {
-        alert("Incorrecto");
-        return;
-    }
-
-    try {
-        const snap = await getDocs(collection(db, "messages"));
-        snap.forEach(async (d) => {
-            await deleteDoc(doc(db, "messages", d.id));
+        globalBtn.addEventListener('click', () => {
+            document.querySelectorAll('#users-list li').forEach(el => el.classList.remove('active'));
+            globalBtn.classList.add('active');
+            openChatRoom("global");
         });
-        alert("Chat eliminado correctamente");
-    } catch (e) {
-        console.error("Error al borrar chat:", e);
-    }
-});
-</script>
 
+        fastAttachBtn.onclick = () => { modal.style.display = "flex"; }
+        closeModalBtn.onclick = () => { modal.style.display = "none"; }
+        window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
+
+        function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
+
+        runSessionCheck();
+    </script>
 </body>
 </html>
